@@ -1,2 +1,7 @@
 target/
 .mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper
+.settings
+.classpath
+.gitignore
+.project
