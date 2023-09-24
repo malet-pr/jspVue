@@ -22,7 +22,36 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>	
+	<data-source>
+        <name>java:global/dataSource</name>
+        <class-name>org.h2.jdbcx.JdbcDataSource</class-name>
+		<transactional>true</transactional>
+		<isolation-level>TRANSACTION_READ_COMMITTED</isolation-level>
+		<initial-pool-size>2</initial-pool-size>
+		<max-pool-size>10</max-pool-size>
+		<min-pool-size>5</min-pool-size>
+		<max-statements>0</max-statements>
+	</data-source>
+	<servlet>
+	    <servlet-name>H2Console</servlet-name>
+	    <servlet-class>org.h2.server.web.JakartaWebServlet</servlet-class>
+	    <load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>H2Console</servlet-name>
+	    <url-pattern>/console/*</url-pattern>
+	</servlet-mapping>
+	<security-role>
+	    <role-name>admin</role-name>
+	</security-role>
+	<listener>
+	    <listener-class>org.h2.server.web.JakartaDbStarter</listener-class>
+	</listener>
 </web-app>
 
-
-
+<!--  
+		<property name="className" value="org.h2.jdbcx.JdbcDataSource"/>
+		<property name="url" value="jdbc:h2:mem:kickoff;DB_CLOSE_DELAY=-1"/>
+		<property name="user" value="sa"/>
+		<property name="password" value="sa"/>
+-->

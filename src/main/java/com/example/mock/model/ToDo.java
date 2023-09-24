@@ -1,14 +1,22 @@
 package com.example.mock.model;
 
-import jakarta.annotation.ManagedBean;
+
+import java.util.UUID;
+import org.hibernate.annotations.GenericGenerator;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Data;
 
 
 @Data
-@ManagedBean("todo")
+@Entity
 public class ToDo {
 
-	private Long id;
+    @Id
+    @Column(name = "id", nullable = false)
+    @GenericGenerator(name = "uuid", strategy = "uuid4")
+    private UUID id;
 	private String title;
 	private String description;
 	private String category;
