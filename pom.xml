@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
     
-    <name>mock-legacy</name>
+    <name>mock</name>
 	<description>
 		Simple Jakarta EE application to test jsp-vue integration.
 	</description>
@@ -22,6 +22,8 @@
         <jakarta.jakartaee-api.version>9.1.0</jakarta.jakartaee-api.version>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <springframework.version>6.0.12</springframework.version>
+        <jakarta.persistence.version>3.1.0</jakarta.persistence.version>
+        <h2.version>2.1.214</h2.version>
     </properties>
 
     <dependencies>
@@ -34,6 +36,13 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>${jakarta.persistence.version}</version>
+        </dependency>        
+        
+        <!-- These are needed to deploy in Tomcat 10 -->
+        <dependency>
 		    <groupId>jakarta.servlet.jsp.jstl</groupId>
 		    <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
 		    <version>3.0.0</version>
@@ -43,6 +52,13 @@
 		    <artifactId>jakarta.servlet.jsp.jstl</artifactId>
 		    <version>3.0.1</version>
 		</dependency>
+		
+		<!-- h2 database -->
+		<dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+        </dependency>
 
         <!-- spring 6 -->
         <dependency>
@@ -100,7 +116,6 @@
         	<artifactId>spring-context-support</artifactId>
         	<version>${springframework.version}</version>
         </dependency>
-  
         
         <!-- other dependencies -->
 		<dependency>
