@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang=en>
 	<head>
@@ -9,14 +9,24 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>	
 		<meta charset="utf-8">
 		<title>Main ToDo Page</title>
-	
-		<script>let text = <c:out value="${text}"/>;</script>
+
 		
 	</head>
 	<body>
 		<jsp:include page="navBar.jsp"></jsp:include>
 		<div>
 			<h1>${text}</h1>
+		</div>
+		<hr> <br>
+		<div>
+			<c:choose>  
+			    <c:when test="${todos.size() > 0}">  
+			       <p>${todos}</p>
+			    </c:when>  
+			    <c:otherwise>  
+			       <p>There are no ToDos to show</p> 
+			    </c:otherwise>  
+			</c:choose>  
 		</div>
 	</body>
 </html>
