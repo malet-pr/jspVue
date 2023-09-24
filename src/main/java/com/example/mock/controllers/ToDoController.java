@@ -1,5 +1,7 @@
 package com.example.mock.controllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +16,8 @@ import jakarta.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/mvc") 
 public class ToDoController {
+	
+	private static final Logger log = LogManager.getLogger("ToDoController");
 	
 	@RequestMapping(value="/todo", method=RequestMethod.GET)
 	public ModelAndView todo(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
