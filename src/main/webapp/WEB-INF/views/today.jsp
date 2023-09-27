@@ -10,9 +10,15 @@
   </head>
   <body>
     <%@ include file="navBar.jsp"%>
-    <h2>DATES</h2>
-    <p>Right now is ${today}</p>
-    <p>${sentence} ${otherDate}</p>
-	<button type="button" onclick="javascript:history.back();">BACK</button> 
+    <div class="text-center">
+    	<h3>DATES</h3>
+    </div>
+    <div class="text-center">
+	    <p>Right now is ${today}</p>
+	    <p>${sentence} ${otherDate}</p>
+	</div>
+	<div class="text-center">
+		<button type="button" class="btn btn-primary" onClick="javascript:history.back();">BACK</button> 
+	</div>
   </body>
 </html>

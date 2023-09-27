@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
     
-    <name>mock-legacy</name>
+    <name>mock</name>
 	<description>
 		Simple Jakarta EE application to test jsp-vue integration.
 	</description>
@@ -22,6 +22,8 @@
         <jakarta.jakartaee-api.version>9.1.0</jakarta.jakartaee-api.version>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <springframework.version>6.0.12</springframework.version>
+        <jakarta.persistence.version>3.1.0</jakarta.persistence.version>
+        <hibernate.version>6.1.7.Final</hibernate.version>
     </properties>
 
     <dependencies>
@@ -34,6 +36,13 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>${jakarta.persistence.version}</version>
+        </dependency>        
+        
+        <!-- These are needed to deploy in Tomcat 10 -->
+        <dependency>
 		    <groupId>jakarta.servlet.jsp.jstl</groupId>
 		    <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
 		    <version>3.0.0</version>
@@ -43,6 +52,27 @@
 		    <artifactId>jakarta.servlet.jsp.jstl</artifactId>
 		    <version>3.0.1</version>
 		</dependency>
+		
+		<!-- database -->
+		<dependency>
+		    <groupId>org.postgresql</groupId>
+		    <artifactId>postgresql</artifactId>
+		    <version>42.6.0</version>
+		</dependency>
+
+		<!-- migration -->
+		<dependency>
+		    <groupId>org.flywaydb</groupId>
+		    <artifactId>flyway-core</artifactId>
+		    <version>9.22.2</version>
+		</dependency>
+       
+        <!-- hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
 
         <!-- spring 6 -->
         <dependency>
@@ -100,7 +130,6 @@
         	<artifactId>spring-context-support</artifactId>
         	<version>${springframework.version}</version>
         </dependency>
-  
         
         <!-- other dependencies -->
 		<dependency>

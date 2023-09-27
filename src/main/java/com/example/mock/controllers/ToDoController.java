@@ -40,12 +40,14 @@ public class ToDoController {
 		
 		List<ToDo> todos = todoService.getAll();
 		log.atError();
+		log.info("tamaño lista: ",todos.size());
 		if(!todos.isEmpty()) {
 			mv.addObject("todos",todos);
 		} else {
 			mv.addObject("todos", new ArrayList<>());
 		}
-		
+		log.info("descriptionShort: ",todos.get(0).getDescriptionShort());
+		log.info("descriptionLong: ",todos.get(0).getDescriptionLong());
 		return mv;
 	}
 	
