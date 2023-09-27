@@ -9,9 +9,18 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>	
 		<meta charset="utf-8">
 		<title>Vue.js Page</title>
+	    <style>
+	        .container {
+	            height: 100vh;
+	            display: grid;
+	            place-items: center;
+	        }
+	    </style>		
 	</head>
 	<body>
 		<%@ include file="/WEB-INF/views/navBar.jsp"%>
-		<h1 class="center">Vue placeholder</h1>
+		<div class="container">
+			<h1 class="center">Vue placeholder</h1>
+		</div>
 	</body>
 </html>

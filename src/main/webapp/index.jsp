@@ -11,17 +11,19 @@
 	</head>
 	<body>
 		<%@ include file="/WEB-INF/views/navBar.jsp"%>
-		
-		<h2>WELCOME</h2>
-		<p>
-			Please chose how many days to add/substract from today
-		</p>
-		<form action="/mock/time" method="get">
-			<input type="button" onclick="javascript:clean()" value="CLEAR" />
-			<input type="number" name="days" id="number" value="0"/>
-			<button type="submit" value="/mock/time">SEND</button>
-		</form>
-		
+		<div class="text-center">
+			<h3>WELCOME</h3>
+			<p>
+				Please chose how many days to add/substract from today
+			</p>
+		</div>
+		<div class="text-center">
+			<form action="/mock/time" method="get">
+				<input type="button" class="btn btn-danger" onClick="javascript:clean()" value="CLEAR" />
+				<input type="number" name="days" id="number" value="0"/>
+				<button type="submit" class="btn btn-success" value="/mock/time">SEND</button>
+			</form>
+		</div>
 		<script>
 		    function clean() {
 		       document.getElementById('number').value = "0";

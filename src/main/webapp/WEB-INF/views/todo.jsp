@@ -12,19 +12,35 @@
 	</head>
 	<body>
 		<jsp:include page="navBar.jsp"></jsp:include>
-		<div>
-			<h1>${text}</h1>
+		<div class="text-center">
+			<h3>${text}</h3>
 		</div>
-		<hr> <br>
-		<div>
+		<div class="text-center">
 			<c:choose>  
 			    <c:when test="${todos.size() > 0}">  
-			       <p>${todos}</p>
+			    	<c:forEach items="${todos}" var="todo">  
+			    		<div class="card text-center d-inline-flex p-2 col-example" style="width: 18rem;">
+						  <div class="card-body">
+						  	<h5 class="card-title"><c:out value="${todo.title}"/></h5>
+						  	<p class="card-text">
+						  		<c:out value="${todo.descriptionShort}"/> <br>
+						  	 	Category: <c:out value="${todo.category}"/> <br>
+						  	 	Completed: <c:out value="${todo.completed}"/>
+						  	</p>
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+								onClick="$('#exampleModal').find('#longDesc').html('${todo.descriptionLong}')">
+							  	Full Text
+							</button>
+						  </div>
+					   </div>
+					</c:forEach> 
 			    </c:when>  
 			    <c:otherwise>  
 			       <p>There are no ToDos to show</p> 
 			    </c:otherwise>  
 			</c:choose>  
 		</div>
+		<!-- modal  -->
+		<jsp:include page="modal1.jsp"></jsp:include>
 	</body>
 </html>
