@@ -2,31 +2,58 @@ package com.example.mock.service;
 
 
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
+import com.example.mock.dao.ToDoDAO;
 import com.example.mock.model.ToDo;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.enterprise.inject.Produces;
+
 
 @Service
 public class ToDoServiceImpl implements ToDoService {
 	
-	private static final Logger log = LogManager.getLogger("ToDoServiceImpl");
+	@Produces
+	ToDoDAO todoDAO = new ToDoDAO();
 	
-	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
-	private EntityManager em = emf.createEntityManager();
 
 	@Override
 	public List<ToDo> getAll() {
-		//List<ToDo> todoList = new ArrayList<>();
+		return todoDAO.getAll();
+	}
 
-		CriteriaQuery<ToDo> cq = em.getCriteriaBuilder().createQuery(ToDo.class);
-		cq.select(cq.from(ToDo.class));
-		
-		return em.createQuery(cq).getResultList();
+	@Override
+	public Optional<ToDo> getById(Long id) {
+		return todoDAO.getById(id);
+	}
+
+	@Override
+	public List<ToDo> getByCategory(String category) {
+		return todoDAO.getByCategory(category);
+	}
+	
+	@Override
+	public ToDo save(ToDo todo) {
+		return todoDAO.save(todo);
+	}
+	
+	@Override
+	public ToDo toggle(Long id){
+		return todoDAO.toggle(id);
+	}
+
+	@Override
+	public String deleteById(Long id) {	
+		return todoDAO.deleteById(id);
+	}
+
+	@Override
+	public List<ToDo> getByTitleLike(String term) {
+		return todoDAO.getByTitleLike(term);
+	}
+
+	@Override
+	public List<ToDo> getByCompleted(Boolean isCompleted) {
+		return todoDAO.getByCompleted(isCompleted);
 	}
 	
 }
