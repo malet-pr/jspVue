@@ -1,5 +1,7 @@
 package com.example.mock.model;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,18 +13,22 @@ import lombok.Data;
 
 @Data
 @Entity(name="to_do")
+@DynamicUpdate
 public class ToDo {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     @NotNull
+    @Column(name="title")
 	private String title;
     @Column(name="description_short")
 	private String descriptionShort;
     @Column(name="description_long")
 	private String descriptionLong;
-	private String category = "other";
-	private boolean completed = false;
-	
+    @Column(name="category")
+	private String category;
+    @Column(name="completed")
+	private Boolean completed;
+
 }
