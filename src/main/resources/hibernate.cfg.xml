@@ -8,6 +8,8 @@
 	        <property name="hibernate.connection.username">user</property>
 	        <property name="hibernate.connection.password">pass</property>
 	        <property name="hibernate.show_sql">false</property>
+	        <property name="hibernate.format_sql"> false</property>
+            <property name="hibernate.highlight_sql">false</property>
 	        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5455/mock</property>
 	        <property name="hibernate.hbm2ddl.auto">none</property>
 			<property name="hibernate.id.new_generator_mappings">false</property>

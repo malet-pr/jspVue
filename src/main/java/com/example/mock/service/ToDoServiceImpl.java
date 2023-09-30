@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 import com.example.mock.dao.ToDoDAO;
+import com.example.mock.dto.UpdateDTO;
 import com.example.mock.model.ToDo;
 import jakarta.enterprise.inject.Produces;
 
@@ -37,7 +38,7 @@ public class ToDoServiceImpl implements ToDoService {
 	}
 	
 	@Override
-	public ToDo toggle(Long id){
+	public UpdateDTO toggle(Long id){
 		return todoDAO.toggle(id);
 	}
 
