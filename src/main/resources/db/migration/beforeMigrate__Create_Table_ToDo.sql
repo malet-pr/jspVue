@@ -6,5 +6,5 @@ create table to_do (
 	description_short VARCHAR(100),
 	description_long VARCHAR(512),
 	category VARCHAR(30) DEFAULT 'other',
-	completed BOOLEAN DEFAULT false
+	finished BOOLEAN DEFAULT false
 );

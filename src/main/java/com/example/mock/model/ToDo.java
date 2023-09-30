@@ -13,7 +13,6 @@ import lombok.Data;
 
 @Data
 @Entity(name="to_do")
-@DynamicUpdate
 public class ToDo {
 
     @Id
@@ -28,7 +27,7 @@ public class ToDo {
 	private String descriptionLong;
     @Column(name="category")
 	private String category;
-    @Column(name="completed")
-	private Boolean completed;
+    @Column(name="finished")
+	private Boolean finished;
 
 }

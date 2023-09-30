@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.example.mock.dto.UpdateDTO;
 import com.example.mock.model.ToDo;
 import com.example.mock.service.ToDoService;
 import com.example.mock.service.ToDoServiceImpl;
@@ -72,13 +74,13 @@ public class ToDoController {
 		}
 	}
 	
-	@RequestMapping(value="/api/toggle-complete", method=RequestMethod.GET)
-	public ResponseEntity<ToDo> toggleComplete(@RequestParam Long id) { 
-		ToDo todoUpdated  = todoService.toggle(id);
-		if(todoUpdated != null) {
-			return new ResponseEntity<ToDo>(todoUpdated,HttpStatus.ACCEPTED);
+	@RequestMapping(value="/api/toggle-complete", method=RequestMethod.GET, produces="application/json")
+	public ResponseEntity<UpdateDTO> toggleComplete(@RequestParam Long id) { 
+		UpdateDTO updated  = todoService.toggle(id);
+		if(updated.isSuccess()) {
+			return new ResponseEntity<UpdateDTO>(updated,HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<UpdateDTO>(updated,HttpStatus.NOT_MODIFIED);
 		}
 	}
 	

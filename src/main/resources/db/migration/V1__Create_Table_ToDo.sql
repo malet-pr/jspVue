@@ -5,5 +5,5 @@ create table to_do (
 	title VARCHAR(100) NOT NULL,
 	description VARCHAR(255),
 	category VARCHAR(50) DEFAULT 'other',
-	completed BOOLEAN DEFAULT false
+	finished BOOLEAN DEFAULT false
 );

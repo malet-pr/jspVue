@@ -1,12 +1,17 @@
 package com.example.mock.dao;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import org.hibernate.Session; 
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.MutationQuery;
 import org.hibernate.query.Query;
+import org.hibernate.query.sqm.internal.QuerySqmImpl;
+
+import com.example.mock.dto.UpdateDTO;
 import com.example.mock.model.ToDo;
 import com.example.mock.model.ToDo_;
 import jakarta.persistence.EntityManager;
@@ -14,6 +19,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.CriteriaUpdate;
 import jakarta.persistence.criteria.Root;
 import lombok.extern.slf4j.Slf4j;
 
@@ -75,22 +81,33 @@ public class ToDoDAO {
 		return null;
 	}
 
-	public ToDo toggle(Long id){
-		Optional<ToDo> todo = this.getById(id);
-		if(todo.isPresent()) {
+	public UpdateDTO toggle(Long id){
+		Optional<ToDo> td = this.getById(id);
+		if(td.isPresent()) {
+			Boolean comp = !td.get().getFinished();
 			Transaction transaction = null;
 			try (Session session = this.getSessionFactory().openSession()) {
 				transaction = session.beginTransaction();
-				ToDo td = todo.get();
-				td.setCompleted(!td.getCompleted());
-				em.persist(td);
+				MutationQuery uq = session.createNativeMutationQuery("UPDATE to_do SET finished=:comp WHERE id=:id")
+										  .setParameter("id", id)
+										  .setParameter("comp", comp);
+				int rows = uq.executeUpdate();
 				transaction.commit();
-				return td;
+				return UpdateDTO.builder()
+						.success(true)
+						.message(rows + " records was/were updated")
+						.todos(Arrays.asList(this.getById(id).get()))
+						.build();
 			} catch (Exception e) {
 				log.error(e.getMessage());
-			}	
-		} 
-		return new ToDo();
+				if (transaction != null) {
+					transaction.rollback();
+				}
+				return UpdateDTO.builder().success(false).message("Could not perform the update requested").build();
+			}
+		} else {
+			return UpdateDTO.builder().success(false).message("Could not find a record with such id").build();
+		}	
 	}
 
 	public String deleteById(Long id) {	
@@ -103,6 +120,7 @@ public class ToDoDAO {
 			try (Session session = this.getSessionFactory().openSession()) {
 				transaction = session.beginTransaction();
 				session.createMutationQuery(cd).executeUpdate();
+				transaction.commit();
 				return "The todo with id = " + id + " was deleted";
 			} catch (Exception e) {
 				log.error(e.getMessage());
@@ -123,13 +141,10 @@ public class ToDoDAO {
 		return todos;
 	}
 
-	public List<ToDo> getByCompleted(Boolean isCompleted) {
-		CriteriaQuery<ToDo> cq = em.getCriteriaBuilder().createQuery(ToDo.class);
-		Root<ToDo> root = cq.from(ToDo.class);
-		cq.select(root).where(em.getCriteriaBuilder().equal(root.get("completed"),isCompleted));
-		Query<ToDo> query = (Query<ToDo>) em.createQuery(cq);
-		List<ToDo> todos = query.getResultList();
-		todos.stream().forEachOrdered(x -> log.info("id:" + x.getId() + " - completed:" + x.getCompleted()));
+	public List<ToDo> getByCompleted(Boolean isCompleted) { 
+		List<ToDo> todos = em.createNativeQuery("SELECT * FROM to_do WHERE finished = :completed", ToDo.class)
+				 .setParameter("completed", isCompleted)
+				 .getResultList();
 		return todos;
 	}
 
