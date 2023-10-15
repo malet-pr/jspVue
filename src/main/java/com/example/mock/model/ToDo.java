@@ -1,7 +1,5 @@
 package com.example.mock.model;
 
-import org.hibernate.annotations.DynamicUpdate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
