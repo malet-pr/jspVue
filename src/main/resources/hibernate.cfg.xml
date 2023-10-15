@@ -13,6 +13,7 @@
 	        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5455/mock</property>
 	        <property name="hibernate.hbm2ddl.auto">none</property>
 			<property name="hibernate.id.new_generator_mappings">false</property>
+			<property name="hibernate.native_query.parameter_binding">true</property>
 	        <property name="connection.pool_size">1</property>
 	        <property name="current_session_context_class">thread</property>
 	        <property name="hibernate.dbcp.initialSize">5</property>
