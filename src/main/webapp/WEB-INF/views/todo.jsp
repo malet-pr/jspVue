@@ -25,7 +25,7 @@
 						  	<p class="card-text">
 						  		<c:out value="${todo.descriptionShort}"/> <br>
 						  	 	Category: <c:out value="${todo.category}"/> <br>
-						  	 	Completed: <c:out value="${todo.completed}"/>
+						  	 	Completed: <c:out value="${todo.finished}"/>
 						  	</p>
 							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
 								onClick="$('#exampleModal').find('#longDesc').html('${todo.descriptionLong}')">
