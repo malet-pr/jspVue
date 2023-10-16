@@ -3,14 +3,14 @@ package com.example.mock.dao;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.sql.Connection;
+import org.hibernate.FlushMode;
 import org.hibernate.Session; 
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.MutationQuery;
 import org.hibernate.query.Query;
-import org.hibernate.query.sqm.internal.QuerySqmImpl;
-
 import com.example.mock.dto.UpdateDTO;
 import com.example.mock.model.ToDo;
 import com.example.mock.model.ToDo_;
@@ -19,8 +19,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.CriteriaUpdate;
 import jakarta.persistence.criteria.Root;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -81,16 +81,18 @@ public class ToDoDAO {
 		return null;
 	}
 
+	@Transactional
 	public UpdateDTO toggle(Long id){
 		Optional<ToDo> td = this.getById(id);
 		if(td.isPresent()) {
 			Boolean comp = !td.get().getFinished();
 			Transaction transaction = null;
 			try (Session session = this.getSessionFactory().openSession()) {
+				session.setHibernateFlushMode(FlushMode.COMMIT);
 				transaction = session.beginTransaction();
-				MutationQuery uq = session.createNativeMutationQuery("UPDATE to_do SET finished=:comp WHERE id=:id")
-										  .setParameter("id", id)
-										  .setParameter("comp", comp);
+				MutationQuery uq = session.createNativeMutationQuery("UPDATE to_do SET finished=? WHERE id=?")
+										  .setParameter(1, comp)
+										  .setParameter(2, id);
 				int rows = uq.executeUpdate();
 				transaction.commit();
 				return UpdateDTO.builder()
