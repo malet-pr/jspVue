@@ -39,8 +39,13 @@
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
             <version>${jakarta.persistence.version}</version>
-        </dependency>        
-        
+        </dependency>   
+		  <dependency>
+		      <groupId>jakarta.servlet</groupId>
+		      <artifactId>jakarta.servlet-api</artifactId>
+		      <version>5.0.0</version>
+		  </dependency>     
+		        
         <!-- These are needed to deploy in Tomcat 10 -->
         <dependency>
 		    <groupId>jakarta.servlet.jsp.jstl</groupId>
